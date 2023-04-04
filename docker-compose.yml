@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  api:
+    image: ghcr.io/inceptionmusic/pdf-generator
+    container_name: pdf-generator
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pdf-generator.rule=Host(`pdf-generator.dev-cloud.inceptionmusic.com`)"
+      - "traefik.http.routers.pdf-generator.entrypoints=web,websecure"
+      - "traefik.http.routers.pdf-generator.tls=true"
+      - "traefik.http.routers.pdf-generator.tls.certresolver=lets-encrypt"
+      - "traefik.http.services.pdf-generator.loadbalancer.server.port=3000"
